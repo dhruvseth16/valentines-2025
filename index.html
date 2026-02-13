@@ -589,7 +589,7 @@
     <script>
         // Bouquet chase logic
         let clickAttempts = 0;
-        const maxAttempts = 4;
+        const maxAttempts = 2;
         const bouquetContainer = document.getElementById('bouquetContainer');
         const bouquetScreen = document.getElementById('bouquetScreen');
         let isRunning = false;
@@ -656,7 +656,7 @@
 
         function catchBouquet() {
             // Success! Show the main content
-            bouquetContainer.style.transition = 'all 0.8s ease';
+            bouquetContainer.style.transition = 'all 0.2s ease';
             bouquetContainer.style.transform = 'translate(-50%, -50%) scale(3)';
             bouquetContainer.style.opacity = '0';
             
