@@ -605,15 +605,34 @@
         });
 
         // Also run on touch for mobile
+        // Also run on touch for mobile
         bouquetContainer.addEventListener('touchstart', (e) => {
+            // If they have already made enough attempts, don't prevent default
+            // This allows the "click" event to fire so they can actually catch it
+            if (clickAttempts >= maxAttempts) {
+                return; 
+            }
+
             e.preventDefault();
+            clickAttempts++;
+            
+            // Taunt logic for mobile
+            const texts = ["Oops! 😜", "Too fast! 💨", "Try again! ✨", "Almost! 🔥"];
+            const catchText = bouquetContainer.querySelector('.catch-me-text');
+            catchText.textContent = texts[Math.min(clickAttempts - 1, texts.length - 1)];
+
+            if (clickAttempts >= maxAttempts) {
+                catchText.textContent = "Okay, you win! Tap me! ❤️";
+            } else {
+                moveToRandomPosition();
+            }
+        });
+        // Add this right below your touchstart listener
+        bouquetContainer.addEventListener('touchend', (e) => {
             if (clickAttempts >= maxAttempts) {
                 catchBouquet();
-                return;
             }
-            moveToRandomPosition();
         });
-
         function moveToRandomPosition() {
             // If they've tried enough times, stop moving so they can catch it
             if (clickAttempts >= maxAttempts) return;
@@ -636,7 +655,7 @@
         bouquetContainer.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            if (clickAttempts >= maxAttempts) {
+            if (clickAttempts >= maxAttempts && !bouquetScreen.classList.contains('hidden')) {
                 catchBouquet();
             } else {
                 clickAttempts++; // Increment AFTER the check to allow 'maxAttempts' moves
