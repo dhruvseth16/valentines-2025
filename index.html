@@ -596,6 +596,7 @@
 
         // Run away from cursor with mouseover
         bouquetContainer.addEventListener('mouseenter', () => {
+            // STOP running away if we've reached maxAttempts
             if (clickAttempts >= maxAttempts || isRunning) return;
             
             isRunning = true;
@@ -614,6 +615,9 @@
         });
 
         function moveToRandomPosition() {
+            // If they've tried enough times, stop moving so they can catch it
+            if (clickAttempts >= maxAttempts) return;
+
             // Get random position avoiding edges
             const padding = 150;
             const maxX = window.innerWidth - padding;
@@ -628,13 +632,15 @@
         }
 
         // Handle bouquet click
+        // Handle bouquet click
         bouquetContainer.addEventListener('click', (e) => {
             e.stopPropagation();
-            clickAttempts++;
             
             if (clickAttempts >= maxAttempts) {
                 catchBouquet();
             } else {
+                clickAttempts++; // Increment AFTER the check to allow 'maxAttempts' moves
+                
                 // Taunt them!
                 const texts = [
                     "Oops! Missed me! 😆",
@@ -649,11 +655,15 @@
                 const catchText = bouquetContainer.querySelector('.catch-me-text');
                 catchText.textContent = texts[Math.min(clickAttempts - 1, texts.length - 1)];
                 
-                // Move to new position
-                moveToRandomPosition();
+                // If this was the last move, change the text to a hint
+                if (clickAttempts >= maxAttempts) {
+                    catchText.textContent = "Okay, you win! Click me! ❤️";
+                    catchText.style.color = "#ff6b9d";
+                } else {
+                    moveToRandomPosition();
+                }
             }
         });
-
         function catchBouquet() {
             // Success! Show the main content
             bouquetContainer.style.transition = 'all 0.2s ease';
