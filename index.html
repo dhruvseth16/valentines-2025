@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose: #ff6b9d;
+            --deep-rose: #c44569;
+            --blush: #ffeef4;
+            --cream: #fff5f7;
+            --gold: #d4af37;
+            --shadow: rgba(196, 69, 105, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 50%, #ffe0ec 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Bouquet Reveal Screen */
+        .bouquet-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe0ec 50%, #ffd1e3 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+
+        .bouquet-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .bouquet-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--deep-rose);
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+            font-weight: 700;
+        }
+
+        .bouquet-container {
+            position: fixed;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: bouquetEntrance 1.5s ease-out 0.5s both;
+            z-index: 10000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes bouquetEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .bouquet {
+            font-size: clamp(80px, 15vw, 150px);
+            text-align: center;
+            filter: drop-shadow(0 10px 30px var(--shadow));
+            animation: float 3s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(-5deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .catch-me-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--deep-rose);
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        /* Floating flowers background */
+        .flowers-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 30px;
+            opacity: 0;
+            animation: float-flower 15s ease-in-out infinite;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        @keyframes float-flower {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.5);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20vh) translateX(100px) rotate(360deg) scale(1);
+            }
+        }
+
+        /* Corner flowers decoration */
+        .corner-flowers {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            font-size: clamp(40px, 8vw, 80px);
+            opacity: 0.7;
+        }
+
+        .corner-flowers.top-left {
+            top: 20px;
+            left: 20px;
+            animation: rotateClockwise 20s linear infinite;
+        }
+
+        .corner-flowers.top-right {
+            top: 20px;
+            right: 20px;
+            animation: rotateCounterClockwise 20s linear infinite;
+        }
+
+        .corner-flowers.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            animation: rotateCounterClockwise 20s linear infinite;
+        }
+
+        .corner-flowers.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            animation: rotateClockwise 20s linear infinite;
+        }
+
+        @keyframes rotateClockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes rotateCounterClockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+        }
+
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--rose);
+            font-size: 20px;
+            opacity: 0;
+            animation: float-heart 8s ease-in infinite;
+        }
+
+        @keyframes float-heart {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-20vh) rotate(360deg) scale(1);
+            }
+        }
+
+        /* Petals falling */
+        .petal {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: fall-petal 10s ease-in infinite;
+        }
+
+        @keyframes fall-petal {
+            0% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(110vh) translateX(100px) rotate(720deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 30px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            color: var(--deep-rose);
+            text-align: center;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeInDown 1.2s ease-out forwards;
+            text-shadow: 3px 3px 6px var(--shadow);
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: var(--deep-rose);
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInDown 1.2s ease-out 0.3s forwards;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px var(--shadow);
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            border: 2px solid rgba(255, 107, 157, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.9s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 1.2s;
+        }
+
+        .message {
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            line-height: 1.8;
+            color: #4a4a4a;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .message strong {
+            color: var(--deep-rose);
+            font-weight: 700;
+        }
+
+        .reveal-button {
+            background: linear-gradient(135deg, var(--rose), var(--deep-rose));
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all 0.3s ease;
+            margin: 30px auto;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reveal-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .reveal-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .reveal-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .reveal-button:active {
+            transform: translateY(-1px);
+        }
+
+        .reveal-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hidden-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1s ease, opacity 0.8s ease;
+            opacity: 0;
+        }
+
+        .hidden-message.revealed {
+            max-height: 2000px;
+            opacity: 1;
+        }
+
+        .love-letter {
+            font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+            line-height: 2;
+            color: #333;
+            font-style: italic;
+            margin-top: 30px;
+        }
+
+        .signature {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--deep-rose);
+            text-align: right;
+            margin-top: 40px;
+            font-style: italic;
+            font-weight: 700;
+        }
+
+        .heart-big {
+            font-size: 5rem;
+            text-align: center;
+            margin: 30px 0;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            10%, 30% {
+                transform: scale(1.1);
+            }
+            20%, 40% {
+                transform: scale(1);
+            }
+        }
+
+        .decoration {
+            text-align: center;
+            font-size: 3rem;
+            margin: 20px 0;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 30px 25px;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+        }
+
+        /* Sparkles */
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            animation: sparkle 2s ease-out;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.5) rotate(180deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bouquet Reveal Screen -->
+    <div class="bouquet-screen" id="bouquetScreen">
+        <h1 class="bouquet-title">Catch the bouquet to reveal your surprise! 💐</h1>
+        <div class="bouquet-container" id="bouquetContainer">
+            <div class="bouquet">💐</div>
+            <div class="catch-me-text">Click me if you can! 😉</div>
+        </div>
+    </div>
+
+    <!-- Corner flower decorations -->
+    <div class="corner-flowers top-left">🌸</div>
+    <div class="corner-flowers top-right">🌺</div>
+    <div class="corner-flowers bottom-left">🌷</div>
+    <div class="corner-flowers bottom-right">🌹</div>
+
+    <!-- Floating flowers background -->
+    <div class="flowers-container" id="flowersContainer"></div>
+
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="container">
+        <h1 class="title">Happy Valentine's Day</h1>
+        <p class="subtitle">To the most amazing person in my life</p>
+
+        <div class="card">
+            <div class="message">
+                Every moment with you feels like <strong>magic</strong>. ✨
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="message">
+                You make my heart skip a beat, my days brighter, and my life <strong>infinitely better</strong>.
+            </div>
+            <div class="heart-big">❤️</div>
+        </div>
+
+        <button class="reveal-button" onclick="revealMessage()">
+            <span>Click to reveal my message 💝</span>
+        </button>
+
+        <div class="hidden-message" id="hiddenMessage">
+            <div class="card">
+                <div class="decoration">✦ ✦ ✦</div>
+                <div class="love-letter">
+                    My dearest love,<br><br>
+                    
+                    Words can never fully capture how much you mean to me, but today I want to try. You are my sunshine on cloudy days, my comfort in difficult times, and my greatest adventure.<br><br>
+                    
+                    Every laugh we share, every dream we chase, every quiet moment together – these are the treasures I hold closest to my heart.<br><br>
+                    
+                    Thank you for being you. For loving me. For choosing me every single day.<br><br>
+                    
+                    I love you more than yesterday, less than tomorrow. ❤️
+                </div>
+                <div class="signature">Forever yours 💕</div>
+                <div class="decoration">✦ ✦ ✦</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bouquet chase logic
+        let clickAttempts = 0;
+        const maxAttempts = 8;
+        const bouquetContainer = document.getElementById('bouquetContainer');
+        const bouquetScreen = document.getElementById('bouquetScreen');
+        let isRunning = false;
+
+        // Run away from cursor with mouseover
+        bouquetContainer.addEventListener('mouseenter', () => {
+            if (clickAttempts >= maxAttempts || isRunning) return;
+            
+            isRunning = true;
+            moveToRandomPosition();
+            setTimeout(() => { isRunning = false; }, 300);
+        });
+
+        // Also run on touch for mobile
+        bouquetContainer.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            if (clickAttempts >= maxAttempts) {
+                catchBouquet();
+                return;
+            }
+            moveToRandomPosition();
+        });
+
+        function moveToRandomPosition() {
+            // Get random position avoiding edges
+            const padding = 150;
+            const maxX = window.innerWidth - padding;
+            const maxY = window.innerHeight - padding;
+            
+            const newX = Math.random() * (maxX - padding) + padding;
+            const newY = Math.random() * (maxY - padding) + padding;
+            
+            bouquetContainer.style.left = newX + 'px';
+            bouquetContainer.style.top = newY + 'px';
+            bouquetContainer.style.transform = 'translate(-50%, -50%)';
+        }
+
+        // Handle bouquet click
+        bouquetContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            clickAttempts++;
+            
+            if (clickAttempts >= maxAttempts) {
+                catchBouquet();
+            } else {
+                // Taunt them!
+                const texts = [
+                    "Oops! Missed me! 😆",
+                    "Too slow! 😜",
+                    "Almost had it! 💨",
+                    "Nice try! 🏃‍♂️",
+                    "Getting warmer! 🔥",
+                    "So close! 😏",
+                    "Keep trying! 💪",
+                    "One more time! ✨"
+                ];
+                const catchText = bouquetContainer.querySelector('.catch-me-text');
+                catchText.textContent = texts[Math.min(clickAttempts - 1, texts.length - 1)];
+                
+                // Move to new position
+                moveToRandomPosition();
+            }
+        });
+
+        function catchBouquet() {
+            // Success! Show the main content
+            bouquetContainer.style.transition = 'all 0.8s ease';
+            bouquetContainer.style.transform = 'translate(-50%, -50%) scale(3)';
+            bouquetContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                bouquetScreen.classList.add('hidden');
+                setTimeout(() => {
+                    bouquetScreen.remove();
+                }, 800);
+            }, 500);
+        }
+
+        // Create floating flowers
+        const flowerEmojis = ['🌸', '🌺', '🌻', '🌼', '🌷', '🌹', '💮', '🏵️', '🥀'];
+        
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.innerHTML = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+            flower.style.left = Math.random() * 100 + 'vw';
+            flower.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            flower.style.animationDelay = Math.random() * 5 + 's';
+            flower.style.fontSize = (Math.random() * 30 + 20) + 'px';
+            
+            document.getElementById('flowersContainer').appendChild(flower);
+            
+            setTimeout(() => {
+                flower.remove();
+            }, 20000);
+        }
+
+        // Generate flowers continuously
+        setInterval(createFlower, 1000);
+        
+        // Initial flowers
+        for (let i = 0; i < 20; i++) {
+            setTimeout(createFlower, i * 200);
+        }
+
+        // Create floating petals
+        const petalEmojis = ['🌸', '🌺', '💮'];
+        
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            petal.innerHTML = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = (Math.random() * 5 + 8) + 's';
+            petal.style.animationDelay = Math.random() * 3 + 's';
+            petal.style.fontSize = (Math.random() * 15 + 10) + 'px';
+            
+            document.getElementById('heartsContainer').appendChild(petal);
+            
+            setTimeout(() => {
+                petal.remove();
+            }, 15000);
+        }
+
+        // Generate petals
+        setInterval(createPetal, 600);
+        
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createPetal, i * 400);
+        }
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 12000);
+        }
+
+        // Generate hearts continuously
+        setInterval(createHeart, 800);
+        
+        // Initial hearts
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+
+        // Reveal message function
+        function revealMessage() {
+            const message = document.getElementById('hiddenMessage');
+            const button = event.target.closest('.reveal-button');
+            
+            message.classList.add('revealed');
+            button.style.display = 'none';
+            
+            // Scroll to message
+            setTimeout(() => {
+                message.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+
+        // Create sparkles on click
+        document.addEventListener('click', function(e) {
+            // Don't create sparkles on bouquet screen
+            if (!bouquetScreen.classList.contains('hidden')) return;
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = e.clientX + (Math.random() - 0.5) * 50 + 'px';
+                    sparkle.style.top = e.clientY + (Math.random() - 0.5) * 50 + 'px';
+                    document.body.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 2000);
+                }, i * 50);
+            }
+        });
+    </script>
+</body>
+</html>
